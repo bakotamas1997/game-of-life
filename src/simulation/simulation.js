@@ -50,4 +50,16 @@ const min = (a, b) => {
   return a < b ? a : b;
 };
 
-export { createClearGrid, forwardOne };
+const getPopulation = (grid) => {
+  let population = 0;
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[i].length; j++) {
+      if (grid[i][j]) {
+        population++;
+      }
+    }
+  }
+  return population;
+};
+
+export { createClearGrid, forwardOne, getPopulation };

@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Grid from "../../components/Grid/Grid";
-import { createClearGrid, forwardOne } from "../../simulation/simulation";
+import {
+  createClearGrid,
+  forwardOne,
+  getPopulation,
+} from "../../simulation/simulation";
 import classes from "./Game.module.css";
 import Button from "../../components/UI/Button/Button";
 
@@ -12,6 +16,7 @@ function Game() {
   const [isStarted, setIsStarted] = useState(false);
   const [count, setCount] = useState(0);
   const [isActive, setIsActive] = useState(false);
+  const [population, setPopulation] = useState(0);
 
   const setCell = (x, y) => {
     if (!isStarted) {
@@ -78,6 +83,11 @@ function Game() {
     };
   }, [isActive]);
 
+  useEffect(() => {
+    const population = getPopulation(grid);
+    setPopulation(population);
+  }, [grid]);
+
   return (
     <div className={classes.Game}>
       <Grid grid={grid} handleClick={setCell} />
@@ -99,6 +109,7 @@ function Game() {
         </Button>
       </div>
       <p>Generation: {count}</p>
+      <p>Population: {population}</p>
     </div>
   );
 }

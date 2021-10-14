@@ -1,4 +1,4 @@
-import { createClearGrid, forwardOne } from "./simulation";
+import { createClearGrid, forwardOne, getPopulation } from "./simulation";
 
 const size = 3;
 
@@ -35,6 +35,18 @@ test("given 3 living cells in a row, when forwardOne is called, then return 3 ce
   testGrid = forwardOne(testGrid);
 
   expect(testGrid).toEqual(expectedGrid);
+});
+
+test("getPopulation returns correct population amount", () => {
+  const testGrid = createClearGrid(size);
+  const expectedPopulation = 4;
+
+  testGrid[0][0] = true;
+  testGrid[0][1] = true;
+  testGrid[1][0] = true;
+  testGrid[1][1] = true;
+
+  expect(getPopulation(testGrid)).toBe(expectedPopulation);
 });
 
 const create3RowPulsarGrid = () => {
