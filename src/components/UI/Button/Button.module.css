@@ -1,0 +1,29 @@
+.Button {
+  padding: 10px 20px;
+  color: white;
+  border-style: none;
+  border-radius: 6px;
+  background: radial-gradient(
+    circle,
+    rgba(252, 70, 107, 1) 0%,
+    rgba(63, 94, 251, 1) 100%
+  );
+  width: 100px;
+  cursor: pointer;
+}
+
+.Button:disabled {
+  background: none;
+  background-color: black;
+  cursor: default;
+}
+
+.Button:not(:disabled):hover {
+  background: radial-gradient(
+    circle,
+    rgba(63, 94, 251, 1) 0%,
+    rgba(252, 70, 107, 1) 100%
+  );
+  color: white;
+  border: none;
+}

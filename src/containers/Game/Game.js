@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Grid from "../../components/Grid/Grid";
 import { createClearGrid, forwardOne } from "../../simulation/simulation";
 import classes from "./Game.module.css";
+import Button from "../../components/UI/Button/Button";
 
 const SIZE = 30;
 
@@ -44,10 +45,12 @@ function Game() {
     <div className={classes.Game}>
       <Grid grid={grid} handleClick={setCell} />
       <div className={classes.GameControls}>
-        <button onClick={handleForward}>Forward</button>
-        <button onClick={handleReset} disabled={!isStarted}>
+        <Button clicked={handleForward} isDisabled={false}>
+          Forward
+        </Button>
+        <Button clicked={handleReset} isDisabled={!isStarted}>
           Reset
-        </button>
+        </Button>
       </div>
       <p>Generation: {count}</p>
     </div>
