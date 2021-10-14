@@ -41,6 +41,13 @@ function Game() {
     setCount(0);
   };
 
+  const handleClear = () => {
+    setInitialState(createClearGrid(SIZE));
+    setGrid(createClearGrid(SIZE));
+    setIsStarted(false);
+    setCount(0);
+  };
+
   return (
     <div className={classes.Game}>
       <Grid grid={grid} handleClick={setCell} />
@@ -50,6 +57,9 @@ function Game() {
         </Button>
         <Button clicked={handleReset} isDisabled={!isStarted}>
           Reset
+        </Button>
+        <Button clicked={handleClear} isDisabled={isStarted}>
+          Clear
         </Button>
       </div>
       <p>Generation: {count}</p>

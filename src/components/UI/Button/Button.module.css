@@ -10,6 +10,7 @@
   );
   width: 100px;
   cursor: pointer;
+  margin: 0px 15px;
 }
 
 .Button:disabled {
