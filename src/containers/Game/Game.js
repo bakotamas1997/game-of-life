@@ -92,19 +92,22 @@ function Game() {
     <div className={classes.Game}>
       <Grid grid={grid} handleClick={setCell} />
       <div className={classes.GameControls}>
-        <Button clicked={handleStart} isDisabled={isActive}>
+        <Button clicked={handleStart} isDisabled={isActive || population === 0}>
           Start
         </Button>
         <Button clicked={handlePause} isDisabled={!isActive}>
           Pause
         </Button>
-        <Button clicked={handleForward} isDisabled={isActive}>
+        <Button
+          clicked={handleForward}
+          isDisabled={isActive || population === 0}
+        >
           Forward
         </Button>
         <Button clicked={handleReset} isDisabled={!isStarted || isActive}>
           Reset
         </Button>
-        <Button clicked={handleClear} isDisabled={isStarted || isActive}>
+        <Button clicked={handleClear} isDisabled={isActive}>
           Clear
         </Button>
       </div>
