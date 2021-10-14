@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "../../components/Grid/Grid";
 import { createClearGrid, forwardOne } from "../../simulation/simulation";
 import classes from "./Game.module.css";
@@ -11,11 +11,14 @@ function Game() {
   const [initialState, setInitialState] = useState(createClearGrid(SIZE));
   const [isStarted, setIsStarted] = useState(false);
   const [count, setCount] = useState(0);
+  const [isActive, setIsActive] = useState(false);
 
   const setCell = (x, y) => {
-    const newGrid = copyGrid(grid);
-    newGrid[x][y] = !newGrid[x][y];
-    setGrid(newGrid);
+    if (!isStarted) {
+      const newGrid = copyGrid(grid);
+      newGrid[x][y] = !newGrid[x][y];
+      setGrid(newGrid);
+    }
   };
 
   const copyGrid = (grid) => {
@@ -24,6 +27,18 @@ function Game() {
       newGrid.push(grid[i].slice());
     }
     return newGrid;
+  };
+
+  const handleStart = () => {
+    if (!isStarted) {
+      setInitialState(copyGrid(grid));
+    }
+    setIsActive(true);
+    setIsStarted(true);
+  };
+
+  const handlePause = () => {
+    setIsActive(false);
   };
 
   const handleForward = () => {
@@ -48,17 +63,38 @@ function Game() {
     setCount(0);
   };
 
+  useEffect(() => {
+    let interval = null;
+    if (isActive) {
+      interval = setInterval(() => {
+        setGrid((grid) => forwardOne(grid));
+        setCount((count) => count + 1);
+      }, 500);
+    } else if (!isActive) {
+      clearInterval(interval);
+    }
+    return () => {
+      clearInterval(interval);
+    };
+  }, [isActive]);
+
   return (
     <div className={classes.Game}>
       <Grid grid={grid} handleClick={setCell} />
       <div className={classes.GameControls}>
-        <Button clicked={handleForward} isDisabled={false}>
+        <Button clicked={handleStart} isDisabled={isActive}>
+          Start
+        </Button>
+        <Button clicked={handlePause} isDisabled={!isActive}>
+          Pause
+        </Button>
+        <Button clicked={handleForward} isDisabled={isActive}>
           Forward
         </Button>
-        <Button clicked={handleReset} isDisabled={!isStarted}>
+        <Button clicked={handleReset} isDisabled={!isStarted || isActive}>
           Reset
         </Button>
-        <Button clicked={handleClear} isDisabled={isStarted}>
+        <Button clicked={handleClear} isDisabled={isStarted || isActive}>
           Clear
         </Button>
       </div>
