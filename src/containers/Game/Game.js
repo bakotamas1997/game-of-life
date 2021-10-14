@@ -4,6 +4,7 @@ import {
   createClearGrid,
   forwardOne,
   getPopulation,
+  getRandomGrid,
 } from "../../simulation/simulation";
 import classes from "./Game.module.css";
 import Button from "../../components/UI/Button/Button";
@@ -88,6 +89,10 @@ function Game() {
     setPopulation(population);
   }, [grid]);
 
+  const handleRandom = () => {
+    setGrid(getRandomGrid(SIZE));
+  };
+
   return (
     <div className={classes.Game}>
       <Grid grid={grid} handleClick={setCell} />
@@ -109,6 +114,9 @@ function Game() {
         </Button>
         <Button clicked={handleClear} isDisabled={isActive}>
           Clear
+        </Button>
+        <Button clicked={handleRandom} isDisabled={isActive || isStarted}>
+          Random
         </Button>
       </div>
       <p>Generation: {count}</p>

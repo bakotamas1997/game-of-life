@@ -62,4 +62,14 @@ const getPopulation = (grid) => {
   return population;
 };
 
-export { createClearGrid, forwardOne, getPopulation };
+const getRandomGrid = (size) => {
+  const randomizedGrid = createClearGrid(size);
+  for (let i = 0; i < randomizedGrid.length; i++) {
+    for (let j = 0; j < randomizedGrid[i].length; j++) {
+      randomizedGrid[i][j] = Math.round(Math.random() * 10) > 7;
+    }
+  }
+  return randomizedGrid;
+};
+
+export { createClearGrid, forwardOne, getPopulation, getRandomGrid };
