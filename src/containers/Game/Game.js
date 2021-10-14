@@ -7,6 +7,8 @@ const SIZE = 30;
 
 function Game() {
   const [grid, setGrid] = useState(createClearGrid(SIZE));
+  const [initialState, setInitialState] = useState(createClearGrid(SIZE));
+  const [isStarted, setIsStarted] = useState(false);
   const [count, setCount] = useState(0);
 
   const setCell = (x, y) => {
@@ -24,8 +26,18 @@ function Game() {
   };
 
   const handleForward = () => {
+    if (!isStarted) {
+      setInitialState(copyGrid(grid));
+    }
     setGrid(forwardOne(grid));
     setCount((count) => count + 1);
+    setIsStarted(true);
+  };
+
+  const handleReset = () => {
+    setGrid(copyGrid(initialState));
+    setIsStarted(false);
+    setCount(0);
   };
 
   return (
@@ -33,7 +45,9 @@ function Game() {
       <Grid grid={grid} handleClick={setCell} />
       <div className={classes.GameControls}>
         <button onClick={handleForward}>Forward</button>
-        <button>Placeholder</button>
+        <button onClick={handleReset} disabled={!isStarted}>
+          Reset
+        </button>
       </div>
       <p>Generation: {count}</p>
     </div>
