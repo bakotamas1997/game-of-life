@@ -33,6 +33,7 @@ function Game() {
       <Grid grid={grid} handleClick={setCell} />
       <div className={classes.GameControls}>
         <button onClick={handleForward}>Forward</button>
+        <button>Placeholder</button>
       </div>
       <p>Generation: {count}</p>
     </div>
